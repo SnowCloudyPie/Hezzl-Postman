@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "8fe32926-49a9-41aa-a568-46a1a6457517",
+		"name": "Hezzl",
+		"description": "StartFragmentEMAIL=test@hezzl.com  \nPASSWORD=123456  \nBASE_URL=https://api-prod.hezzl.com/  \nCAMPAIGN_ID=145602  \nACCESS_TOKEN=your_access_token  \nTIME_ZONE=your_time_zoneEndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28729893"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Сервер отдал статус 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Записываем в переменную accessToken значение параметра accessToken из ответа\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"accessToken\", jsonData.accessToken);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверяем, что скорость ответа от сервера менее 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "test@hezzl.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\" : \"test@hezzl.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-prod.hezzl.com/auth/v1/game/145602/check-login",
+					"protocol": "https",
+					"host": [
+						"api-prod",
+						"hezzl",
+						"com"
+					],
+					"path": [
+						"auth",
+						"v1",
+						"game",
+						"145602",
+						"check-login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Init",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Сервер отдал статус 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Записываем в переменную timeZone значение параметра time из ответа\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"timeZone\", jsonData.time);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверяем наличие параметра data в ответе\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"data\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверяем наличие параметра auth в data в ответе\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data).to.have.property(\"auth\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"test@hezzl.com\",\r\n    \"password\" : \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-prod.hezzl.com/gw/v1/game/145602/init",
+					"protocol": "https",
+					"host": [
+						"api-prod",
+						"hezzl",
+						"com"
+					],
+					"path": [
+						"gw",
+						"v1",
+						"game",
+						"145602",
+						"init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConfimCode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Сервер отдал статус 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверяем, что скорость ответа от сервера менее 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJSU0ExXzUiLCJjdHkiOiJKV1QiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiemlwIjoiREVGIn0.dulmrcuOhCRNplCGseeN7hCkYW3zOtYN97bsTbmfHT9PnTlf5PDgYt6dnUBBMRo9Xd7xvWwLlQHQRG0XLFI2_jVXDRaneFgngDDbO3b4aDjvFhrLjEhmb6VrFZnALrJ1_B1f0HDDjvix2mtMeDkfIpAbd5P5Giw3yyEfMdnPTdFbG2TgBGX7ST7IfvUnh9Qb8YhACTcvgUPJ2Md3CDh7mmneEtedmlj5_78vHaSQN_2ptbb4FnwukptPXTickPwv72nVGTal2Yx-IdtDK4hq4PIPBGh1Y8z_iq3rkYnE8hCUZA_eTbhk3H18uTBPM7_XYCoTiEK6yQODvi4U55Z8Fw.bnZ5N0NxljWA1eEwJJcE5g.5gK-ha8tGShhePol9c-wEtKut55ZboZv6b3j6FCz7WaN0BBQzkXxXoa-qhICFD3LxNma0Tw-6LZuQrrJvMVVMvS7mopkJh16OylOLCzxu4XNeCBWQ_LHv8vM7qiproEzLJPe_KDVgHBH1JrwzATaj2S-ZzjbV7-S8BG07ojQc_bBx5kya8DjKarpLQeptW6x05jUPAI3ihMHO47SbM5Jw1WMkqcv0NRWFjijWF2yfEaeKEN7M1rJjaCs5_tOtb_8ORqFis32WuVR-G0V1W8dBzCMK4-m9KMGCnTqxBfKoddWG8dFJc30Qxr2-mEC9eAuuO2XG_e7H0ijVGWJ3hnVr1ByNTXYc0y6veGHgZ_o_PYOQDlm3d664gKHIgqH9v3eCa3xnPaFmhTVTAAVPRPWHIU_XHo5HPPjUip_5N1boQs.CLitXfUEAlSm8JrlNsX_eg",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"code\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-prod.hezzl.com/auth/v1/game/145602/confirm-code",
+					"protocol": "https",
+					"host": [
+						"api-prod",
+						"hezzl",
+						"com"
+					],
+					"path": [
+						"auth",
+						"v1",
+						"game",
+						"145602",
+						"confirm-code"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
